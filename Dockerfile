@@ -1,22 +1,12 @@
-# Use OpenJDK 17 as the base image
-FROM openjdk:17-jdk-slim
-
-# Set working directory
+# Step 1: Build the WAR file using Maven
+FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copy project files
-COPY . /app
-
-# Install Maven to build the WAR
-RUN apt-get update && apt-get install -y maven wget && mvn clean package -DskipTests
-
-# Download Tomcat 10
-RUN wget https://downloads.apache.org/tomcat/tomcat-10/v10.1.24/bin/apache-tomcat-10.1.24.tar.gz && \
-    tar xzf apache-tomcat-10.1.24.tar.gz && \
-    mv target/*.war apache-tomcat-10.1.24/webapps/ROOT.war
-
-# Expose port 8080
+# Step 2: Deploy the WAR on Tomcat
+FROM tomcat:10.1-jdk17
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ExpenseTracker.war
 EXPOSE 8080
-
-# Start Tomcat
-CMD ["apache-tomcat-10.1.24/bin/catalina.sh", "run"]
+CMD ["catalina.sh", "run"]
