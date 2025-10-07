@@ -3,6 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.expensetracker</groupId>
@@ -13,11 +14,10 @@
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <!-- ✅ Jakarta Servlet API (for Tomcat 10+) -->
+    <!-- Jakarta Servlet API (for Servlets) -->
     <dependency>
       <groupId>jakarta.servlet</groupId>
       <artifactId>jakarta.servlet-api</artifactId>
@@ -25,26 +25,24 @@
       <scope>provided</scope>
     </dependency>
 
-    <!-- ✅ JSP API -->
-    <dependency>
-      <groupId>jakarta.servlet.jsp</groupId>
-      <artifactId>jakarta.servlet.jsp-api</artifactId>
-      <version>3.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <!-- ✅ JSTL (for tag libraries in JSP) -->
+    <!-- JSTL (for JSP tag libraries like c:forEach, c:if) -->
     <dependency>
       <groupId>jakarta.servlet.jsp.jstl</groupId>
       <artifactId>jakarta.servlet.jsp.jstl-api</artifactId>
       <version>3.0.0</version>
     </dependency>
-
     <dependency>
       <groupId>org.glassfish.web</groupId>
       <artifactId>jakarta.servlet.jsp.jstl</artifactId>
       <version>3.0.1</version>
     </dependency>
+
+    <!-- MySQL JDBC Connector -->
+<dependency>
+  <groupId>mysql</groupId>
+  <artifactId>mysql-connector-java</artifactId>
+  <version>8.0.33</version>
+</dependency>
   </dependencies>
 
   <build>
@@ -58,8 +56,6 @@
           <target>17</target>
         </configuration>
       </plugin>
-
-      <!-- ✅ WAR packaging plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
@@ -72,3 +68,4 @@
   </build>
 
 </project>
+
